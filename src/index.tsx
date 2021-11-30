@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { Web3ReactProvider } from "@web3-react/core";
-import Web3ReactManager from "@/components/Web3ReactManager";
+import Web3ReactManager from "./components/Web3ReactManager";
 import getLibrary from "./utils/getLibrary";
 
 declare global {

@@ -105,7 +105,7 @@
    
     .top-h{position:fixed;left:0;top:0;width:40%;min-width:calc(250px + 150 * (100vw - 320px) / 1080);z-index:10;}
     .top-h-r{position:fixed;right:0;top:0;width:60%;z-index:5;min-width:calc(350px + 150 * (100vw - 320px) / 1080);}
-    #h{z-index:9999;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;position:fixed;top:calc(15px + 5 * (100vw - 320px) / 1080);left:0;width:100%;pointer-events:none;}
+    #h{z-index:9999;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;position:fixed;top:calc(15px + 5 * (100vw - 320px) / 1080);left:0;width:100%;}
     #h a{pointer-events:auto;}
     #h .lg{width:calc(250px + 30 * (100vw - 320px) / 1080);display:block;transform:translateY(-12%);}
     #h .l{display:flex;align-items:center;}

@@ -1,10 +1,6 @@
 import { UAParser } from 'ua-parser-js'
 
-let nWindow
-if (typeof window !== 'undefined') {
-  nWindow = window.navigator.userAgent
-}
-const parser = new UAParser(nWindow)
+const parser = new UAParser(window.navigator.userAgent)
 const { type } = parser.getDevice()
 
 export const userAgent = parser.getResult()

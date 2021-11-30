@@ -36,11 +36,13 @@ export const CHAIN_INFO: ChainInfo = {
   [SupportedChainId.MAINNET]: {
     explorer: 'https://bscscan.com/',
     label: 'Binance Smart Chain Mainnet',
+    rpcUrls: ['https://bsc-dataseed.binance.org/', 'https://bsc-dataseed1.defibit.io/'],
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
   },
   [SupportedChainId.TESTNET]: {
     explorer: 'https://testnet.bscscan.com/',
     label: 'Binance Smart Chain Testnet',
+    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/', 'https://data-seed-prebsc-2-s1.binance.org:8545/'],
     nativeCurrency: { name: 'tBNB', symbol: 'tBNB', decimals: 18 },
   },
 }
