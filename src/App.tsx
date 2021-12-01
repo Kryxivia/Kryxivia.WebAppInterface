@@ -10,8 +10,11 @@ import Web3Status from "./components/Web3Status";
 import { StakingStats } from "./components/StakingStats";
 import { StakeKxa } from "./components/StakeKxa";
 import { StakedKxa } from "./components/StakedKxa";
+import { useWeb3React } from "@web3-react/core";
 
 function App() {
+    const { account } = useWeb3React();
+
     return (
         <>
             <header id="h">
@@ -114,8 +117,12 @@ function App() {
                         <h2>Stake your KXA Token</h2>
                         <form className="fm">
                             <StakingStats />
-                            <StakeKxa />
-                            <StakedKxa />
+                            {account && (
+                                <>
+                                    <StakeKxa />
+                                    <StakedKxa />
+                                </>
+                            )}
                         </form>
                     </div>
                     <div className="copy">Kryxivia.io © 2021-2022</div>
