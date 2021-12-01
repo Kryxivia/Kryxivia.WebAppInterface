@@ -29,22 +29,20 @@ const Web3Status: React.FC = () => {
     }, [account, library]);
 
     return (
-        <EthSWRConfig value={{ web3Provider: library, ABIs: new Map(ABIs(chainId || 97)) }}>
-            <div className="r">
-                {account && (
-                    <>
-                        <div className="bt" style={{marginRight: '1rem'}}>
-                            {TOKENS_BY_NETWORK[chainId || 97].map((token) => (
-                                <TokenBalance key={token.address} {...token} />
-                            ))}
-                        </div>
-                        <div className="bt bt-has">{shortenAddress(account)}</div>
-                    </>
-                )}
-                {error && <div className="bt">{error instanceof UnsupportedChainIdError ? `${CHAIN_INFO[defaultChain].label}` : Error}</div>}
-                {(contextNetwork.active || active) && !account && <Wallet />}
-            </div>
-        </EthSWRConfig>
+        <div className="r">
+            {account && chainId && (
+                <EthSWRConfig value={{ web3Provider: library, ABIs: new Map(ABIs(chainId)) }}>
+                    <div className="bt" style={{ marginRight: "1rem" }}>
+                        {TOKENS_BY_NETWORK[chainId].map((token) => (
+                            <TokenBalance key={token.address} {...token} />
+                        ))}
+                    </div>
+                    <div className="bt bt-has">{shortenAddress(account)}</div>
+                </EthSWRConfig>
+            )}
+            {error && <div className="bt">{error instanceof UnsupportedChainIdError ? `${CHAIN_INFO[defaultChain].label}` : Error}</div>}
+            {(contextNetwork.active || active) && !account && <Wallet />}
+        </div>
     );
 };
 

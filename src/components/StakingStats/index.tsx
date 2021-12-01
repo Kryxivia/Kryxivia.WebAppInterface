@@ -46,7 +46,6 @@ function useTotalStakedValue(totalLocked: string, tokenPrice: number) {
 
     useEffect(() => {
         const fetchData = async () => {
-            
             setAmount(Number(totalLocked) * tokenPrice);
         };
 
@@ -58,6 +57,7 @@ function useTotalStakedValue(totalLocked: string, tokenPrice: number) {
 
 export const StakingStats: React.FC = () => {
 
+    
     const totalLocked = useTotalLocked();
     const tokenPrice = 0.015
     const totalStakedValue = useTotalStakedValue(totalLocked, tokenPrice)

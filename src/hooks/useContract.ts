@@ -1,9 +1,17 @@
+import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { useMemo } from "react";
 import ERC20 from "../abis/KxaTokenContract.json";
 import KxaStaking from "../abis/KxaStakingContract.json";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
+export function getSigner(library: Web3Provider, account: string): JsonRpcSigner {
+  return library.getSigner(account).connectUnchecked()
+}
+
+export function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provider | JsonRpcSigner {
+  return account ? getSigner(library, account) : library
+}
 
 export default function useContract<T extends Contract = Contract>(
     address: string,
@@ -17,7 +25,7 @@ export default function useContract<T extends Contract = Contract>(
       }
   
       try {
-        return new Contract(address, ABI, library.getSigner(account))
+        return new Contract(address, ABI, getProviderOrSigner(library, account as any))
       } catch (error) {
         console.error('Failed To Get Contract', error)
   
