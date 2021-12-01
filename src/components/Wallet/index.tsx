@@ -12,49 +12,16 @@ const WALLET_VIEWS = {
 };
 
 export const Wallet: React.FC = () => {
-    // important that these are destructed from the account-specific web3-react context
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { active, account, connector, activate, error, library } = useWeb3React();
+    const { activate, error } = useWeb3React();
 
     const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
 
     const [pendingError, setPendingError] = useState<boolean>();
 
-    // always reset to account view
     useEffect(() => {
         setPendingError(false);
         setWalletView(WALLET_VIEWS.ACCOUNT);
     }, []);
-
-    /* const activePrevious = usePrevious(active);
-    const connectorPrevious = usePrevious(connector);
-    useEffect(() => {
-        if ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error)) {
-            setWalletView(WALLET_VIEWS.ACCOUNT);
-        }
-    }, [setWalletView, active, error, connector, activePrevious, connectorPrevious]); */
-
-    /* useEffect(() => {
-        console.log('acc:', account)
-        console.log('lib:', library)
-        if (!!(library && account)) {
-          library
-            .getSigner(account)
-            .signMessage(process.env.REACT_APP_SIGN_KEY)
-            .then(async (signature: string) => {
-              window.alert(signature)
-              const result = await WalletService.authWallet(account, signature)
-              if (result) {
-                console.log(result)
-              }
-            })
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .catch((error: any) => {
-                console.log(error)
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [account, library]) */
 
     const tryActivation = async () => {
         setWalletView(WALLET_VIEWS.PENDING);
@@ -84,9 +51,6 @@ export const Wallet: React.FC = () => {
                 </div>
             );
         }
-        /* if (account && walletView === WALLET_VIEWS.ACCOUNT) {
-            return <div className="bt">{shortenAddress(account)}</div>
-        } */
 
         return walletView === WALLET_VIEWS.PENDING ? (
             <WalletPendingView connector={injected} error={pendingError} setPendingError={setPendingError} tryActivation={tryActivation} />
