@@ -49,6 +49,7 @@ export const StakeKxa: React.FC = () => {
 
     async function stake(e: any) {
         e.preventDefault();
+        resetFeedback();
         if (stakingContract == null || tokenContract == null || amountToStake === "") {
             return;
         }

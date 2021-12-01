@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import React, { useEffect, useState } from "react";
 import { useStakingContract, useTokenContract } from "../../hooks/useContract";
@@ -22,7 +23,7 @@ function useTotalLocked() {
     return amount;
 }
 
-/* function useTotalStakers() {
+function useTotalStakers() {
     const [amount, setAmount] = useState("");
     const stakingContract = useStakingContract(CONTRACT_STAKING);
 
@@ -31,15 +32,16 @@ function useTotalLocked() {
             if (stakingContract == null) {
                 return;
             }
-            const result = await stakingContract._totalLocked();
-            setAmount(parseFloat(formatUnits(result, 18)).toFixed());
+            const result = await stakingContract.getTotalStakers();
+            const convert = BigNumber.from(result);
+            setAmount(convert.toString());
         };
 
         fetchData();
     }, [setAmount, stakingContract]);
 
     return amount;
-} */
+}
 
 function useTotalStakedValue(totalLocked: string, tokenPrice: number) {
     const [amount, setAmount] = useState(0);
@@ -59,6 +61,7 @@ export const StakingStats: React.FC = () => {
 
     
     const totalLocked = useTotalLocked();
+    const totalStakers = useTotalStakers();
     const tokenPrice = 0.015
     const totalStakedValue = useTotalStakedValue(totalLocked, tokenPrice)
 
@@ -68,7 +71,7 @@ export const StakingStats: React.FC = () => {
             <div className="ins">
                 <div className="in">
                     <label htmlFor="total-kxa-user">Total of users staking KXA</label>
-                    <input type="text" name="total-kxa-user" value={1987} disabled />
+                    <input type="text" name="total-kxa-user" value={totalStakers} disabled />
                 </div>
                 <div className="in">
                     <label htmlFor="total-kxa-staked">Total token KXA staked</label>
