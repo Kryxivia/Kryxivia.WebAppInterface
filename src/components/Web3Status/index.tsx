@@ -38,7 +38,7 @@ const Web3Status: React.FC = () => {
                                 <TokenBalance key={token.address} {...token} />
                             ))}
                         </div>
-                        <div className="bt">{shortenAddress(account)}</div>
+                        <div className="bt bt-has">{shortenAddress(account)}</div>
                     </>
                 )}
                 {error && <div className="bt">{error instanceof UnsupportedChainIdError ? `${CHAIN_INFO[defaultChain].label}` : Error}</div>}
