@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useStakingContract, useTokenContract } from "../../hooks/useContract";
 import { formatUnits } from "@ethersproject/units";
 
-export const CONTRACT_STAKING = process.env.REACT_APP_CONTRACT_STAKING_KXA || "0xcC6621bD7706c5AD2040B04D0Fa7065B6280139c";
+export const CONTRACT_STAKING = process.env.REACT_APP_CONTRACT_STAKING_KXA || "0x57613EeE7Fb9E3B311E1Fe1BF7B42b664f65AC89";
 export const CONTRACT_TOKEN = process.env.REACT_APP_CONTRACT_TOKEN_KXA || "0x2223bF1D7c19EF7C06DAB88938EC7B85952cCd89";
 
 function useMintStakeAmount() {

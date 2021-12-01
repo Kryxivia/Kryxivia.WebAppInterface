@@ -6,7 +6,7 @@ import { useStakingContract } from "../../hooks/useContract";
 import { CONTRACT_STAKING } from "../StakeKxa";
 
 function useUserStakeAmount(account: string | undefined | null) {
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState(0);
     const stakingContract = useStakingContract(CONTRACT_STAKING);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ function useUserStakeAmount(account: string | undefined | null) {
                 return;
             }
             const result = await stakingContract.getAddrLockAmount(account);
-            setAmount(parseFloat(formatUnits(result, 18)).toFixed());
+            setAmount(Number(parseFloat(formatUnits(result, 18)).toFixed()));
         };
 
         fetchData();
@@ -78,6 +78,7 @@ function useUnlockDate(startBlock: number, endBlock: number) {
         const fetchData = async () => {
             const end = new Date();
             const diff = endBlock - startBlock;
+            // 27000 is average BSC block per day
             const daysLeft = diff / 27000;
             const unlockDate = addDays(end, daysLeft);
             const dateOptions = { year: "numeric", month: "long", day: "numeric" };
@@ -102,8 +103,6 @@ function useIsUnlocked(date: Date) {
             const today = Date.parse(newDate);
             const unlock = Date.parse(date.toString());
 
-            console.log("today: ", today);
-            console.log("Unlock: ", unlock);
             if (today > unlock) {
                 setIsUnlocked(true);
             } else {
@@ -122,13 +121,10 @@ export const StakedKxa: React.FC = () => {
 
     const userStakedAmount = useUserStakeAmount(account);
     const startBlock = useGetStartBlock(account);
-    //console.log(startBlock)
     const endBlock = useGetEndBlock(account);
-    //console.log(endBlock)
     const { unlockDate, dateObj } = useUnlockDate(startBlock, endBlock);
 
     const isUnlocked = useIsUnlocked(dateObj);
-    console.log("Is unlocked: ", isUnlocked);
 
     async function claim(e: any) {
         e.preventDefault();
@@ -149,8 +145,14 @@ export const StakedKxa: React.FC = () => {
                             <span>
                                 {!isUnlocked ? (
                                     <>
-                                        <small>Unlock date</small>
-                                        <strong>{unlockDate}</strong>
+                                        {userStakedAmount > 0 ? (
+                                            <>
+                                                <small>Unlock date</small>
+                                                <strong>{unlockDate}</strong>
+                                            </>
+                                        ) : (
+                                            <strong>Nothing to claim</strong>
+                                        )}
                                     </>
                                 ) : (
                                     <strong>Claim</strong>
