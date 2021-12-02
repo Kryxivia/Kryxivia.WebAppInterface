@@ -5,7 +5,7 @@ import { useStakingContract, useTokenContract } from "../../hooks/useContract";
 import { CONTRACT_STAKING, CONTRACT_TOKEN } from "../StakeKxa";
 
 function useTotalLocked() {
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState(0);
     const tokenContract = useTokenContract(CONTRACT_TOKEN);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function useTotalLocked() {
                 return;
             }
             const result = await tokenContract.balanceOf(CONTRACT_STAKING);
-            setAmount(parseFloat(formatUnits(result, 18)).toFixed());
+            setAmount(Number(formatUnits(result, 18)));
         };
 
         fetchData();
@@ -24,7 +24,7 @@ function useTotalLocked() {
 }
 
 function useTotalStakers() {
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState(0);
     const stakingContract = useStakingContract(CONTRACT_STAKING);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function useTotalStakers() {
             }
             const result = await stakingContract.getTotalStakers();
             const convert = BigNumber.from(result);
-            setAmount(convert.toString());
+            setAmount(convert.toNumber());
         };
 
         fetchData();
@@ -43,12 +43,12 @@ function useTotalStakers() {
     return amount;
 }
 
-function useTotalStakedValue(totalLocked: string, tokenPrice: number) {
+function useTotalStakedValue(totalLocked: number, tokenPrice: number) {
     const [amount, setAmount] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
-            setAmount(Number(totalLocked) * tokenPrice);
+            setAmount(totalLocked * tokenPrice);
         };
 
         fetchData();
@@ -71,11 +71,11 @@ export const StakingStats: React.FC = () => {
             <div className="ins">
                 <div className="in">
                     <label htmlFor="total-kxa-user">Total of users staking KXA</label>
-                    <input type="text" name="total-kxa-user" value={totalStakers} disabled />
+                    <input type="number" name="total-kxa-user" value={totalStakers} disabled />
                 </div>
                 <div className="in">
                     <label htmlFor="total-kxa-staked">Total token KXA staked</label>
-                    <input type="text" name="total-kxa-staked" value={totalLocked} disabled />
+                    <input type="number" name="total-kxa-staked" value={totalLocked} disabled />
                 </div>
                 <div className="in">
                     <label htmlFor="total-kxa-staked-value">Total KXA $ staked</label>

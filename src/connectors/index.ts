@@ -3,9 +3,13 @@ import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from "../constants/chain";
 import { NetworkConnector } from "./NetworkConnector";
 
 const NETWORK_URLS: { [key in SupportedChainId]: string } = {
+    [SupportedChainId.MAINNET]: `https://bsc-dataseed.binance.org/`,
+    [SupportedChainId.TESTNET]: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
+};
+/* const NETWORK_URLS: { [key in SupportedChainId]: string } = {
     [SupportedChainId.MAINNET]: `https://speedy-nodes-nyc.moralis.io/70f4bddb98c9a8670b526b2e/bsc/mainnet`,
     [SupportedChainId.TESTNET]: `https://speedy-nodes-nyc.moralis.io/70f4bddb98c9a8670b526b2e/bsc/testnet`,
-};
+}; */
 
 export const network = new NetworkConnector({
     urls: NETWORK_URLS,

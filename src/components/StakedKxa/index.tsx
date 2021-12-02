@@ -1,5 +1,5 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { formatEther, formatUnits } from "@ethersproject/units";
+import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { useStakingContract } from "../../hooks/useContract";
