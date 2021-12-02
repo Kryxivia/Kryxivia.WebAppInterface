@@ -1,6 +1,4 @@
 import React from "react";
-import Kxa from "../../assets/img/kxa.png";
-import Lock from "../../assets/img/lock.png";
 import IllusTop from "../../assets/img/top-h.png";
 import IllusTopR from "../../assets/img/top-h-r.png";
 import { Header } from "../../components/Header";
