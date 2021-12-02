@@ -13,7 +13,6 @@ function useGetValidatedState(account: string | undefined | null) {
                 return;
             }
             const result = await stakingContract.getValidatedState(account);
-            console.log(result)
             setIsValidated(result);
         };
 

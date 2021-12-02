@@ -57,7 +57,6 @@ export const StakeKxa: React.FC = () => {
         //get value from contract
         if (asNumber <= 15000) {
             setError(`Invalid amount to deposit on the staking contract: ${asNumber} KXA`);
-            console.log(`Error: Invalid amount to deposit on the staking contract: ${asNumber} KXA`);
             return;
         }
 
