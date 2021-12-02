@@ -4,6 +4,8 @@ import { ReactComponent as MetamaskIcon } from "../../assets/img/metamask.svg";
 import { useWeb3React } from "@web3-react/core";
 import { useStakingContract, useTokenContract } from "../../hooks/useContract";
 import { formatUnits } from "@ethersproject/units";
+import { useNavigate } from "react-router";
+import { CHAIN_INFO } from "../../constants/chain";
 
 export const CONTRACT_STAKING = process.env.REACT_APP_CONTRACT_STAKING_KXA || "0x57613EeE7Fb9E3B311E1Fe1BF7B42b664f65AC89";
 export const CONTRACT_TOKEN = process.env.REACT_APP_CONTRACT_TOKEN_KXA || "0x2223bF1D7c19EF7C06DAB88938EC7B85952cCd89";
@@ -28,14 +30,16 @@ function useMintStakeAmount() {
 }
 
 export const StakeKxa: React.FC = () => {
-    const { account } = useWeb3React();
+    const { account, library, chainId } = useWeb3React();
 
     const stakingContract = useStakingContract(CONTRACT_STAKING);
     const tokenContract = useTokenContract(CONTRACT_TOKEN);
+    let navigate = useNavigate();
 
     //const { data: minStakeAmount } = useEtherSWR([CONTRACT_STAKING, "getMinimumRequiredLock", account]);
 
     const [amountToStake, setAmountToStake] = useState<string>("");
+    const [stakeTx, setStakeTx] = useState<string>();
     const [error, setError] = useState<string>();
     const [pending, setPending] = useState<string>();
     const [success, setSuccess] = useState<string>();
@@ -51,12 +55,13 @@ export const StakeKxa: React.FC = () => {
         e.preventDefault();
         resetFeedback();
         if (stakingContract == null || tokenContract == null || amountToStake === "") {
+            setError("Enter an amount to stake");
             return;
         }
         const asNumber: number = parseFloat(amountToStake);
         //get value from contract
         if (asNumber <= 15000) {
-            setError(`Invalid amount to deposit on the staking contract: ${asNumber} KXA`);
+            setError(`Invalid amount to stake needs to be superior than ${asNumber} KXA`);
             return;
         }
 
@@ -68,31 +73,31 @@ export const StakeKxa: React.FC = () => {
             if (parseFloat(allowance) < parseFloat(decimalAmount)) {
                 setPending("Allowance pending, please allow the use of your token balance for the contract...");
                 const approveTx = await tokenContract.approve(process.env.REACT_APP_CONTRACT_STAKING_KXA, wei.toString());
-                setPending("Waiting for confirmations...");
-                await approveTx.wait();
+                setPending("Waiting for 2 confirmations ...");
+                await library.waitForTransaction(approveTx.hash, 2);
                 setPending("Allowance successfully increased, waiting for deposit transaction...");
                 resetFeedback();
             }
-            /** Balance check */
-            /* const currentBalanceDecimal: any = utils.parseEther(balance.toString());
-            if (parseFloat(decimalAmount) > parseFloat(currentBalanceDecimal)) {
-                setPending("");
-                setError(`You only have ${balance} KXA in your wallet.`);
-                return;
-            } */
 
             setPending("Pending: check your wallet extension to execute the chain transaction ...");
             const result = await stakingContract.stakeKXA(decimalAmount.toString());
-            setPending("Waiting for confirmations...");
-            const txReceipt = await result.wait();
+            setPending("Waiting for 2 confirmations...");
+            const txReceipt = await library.waitForTransaction(result.hash, 2);
             if (txReceipt.status === 1) {
                 resetFeedback();
-                setSuccess(`Deposit successfully completed ! ${txReceipt.transactionHash}`);
+                setSuccess(`Deposit successfully completed !`);
+                setStakeTx(`${txReceipt.transactionHash}`)
             }
-            //refreshBalanceContract();
+            navigate("/");
         } catch (e: any) {
             resetFeedback();
-            setError(`${e && e.message ? `\n\n${e.message}` : `Error: ${e}`}`);
+            if (e && e?.data?.message !== undefined) {
+                setError(`${e.data.message}`);
+            } else if (e && e.message) {
+                setError(`${e.message}`);
+            } else {
+                setError(`Error: ${e}`);
+            }
         }
     }
 
@@ -136,13 +141,14 @@ export const StakeKxa: React.FC = () => {
                 </p>
             )}
             {pending && (
-                <p style={{ marginTop: "1rem", color: "white" }} id="stake-amount">
+                <p style={{ marginTop: "1rem", color: "blue" }} id="stake-amount">
                     ℹ️ {pending}
                 </p>
             )}
-            {success && (
-                <p style={{ marginTop: "1rem", color: "green" }} id="stake-amount">
-                    ✅ {success}
+            {success && chainId && (
+                <p style={{ marginTop: "1rem", color: "rgb(var(--green))" }} id="stake-amount">
+                    ✅ {success + ' '}
+                    <a style={{textDecoration: 'underline'}} href={`${CHAIN_INFO[chainId].explorer}tx/${stakeTx}`} target="_blank" rel="noreferrer">View on BSCScan</a>
                 </p>
             )}
         </fieldset>
