@@ -6,6 +6,7 @@ import { useStakingContract, useTokenContract } from "../../hooks/useContract";
 import { formatUnits } from "@ethersproject/units";
 import { useNavigate } from "react-router";
 import { CHAIN_INFO } from "../../constants/chain";
+import { useUserStakeAmount } from "../StakedKxa";
 
 export const CONTRACT_STAKING = process.env.REACT_APP_CONTRACT_STAKING_KXA || "0x57613EeE7Fb9E3B311E1Fe1BF7B42b664f65AC89";
 export const CONTRACT_TOKEN = process.env.REACT_APP_CONTRACT_TOKEN_KXA || "0x2223bF1D7c19EF7C06DAB88938EC7B85952cCd89";
@@ -31,12 +32,11 @@ function useMintStakeAmount() {
 
 export const StakeKxa: React.FC = () => {
     const { account, library, chainId } = useWeb3React();
+    const userStakedAmount = useUserStakeAmount(account);
 
     const stakingContract = useStakingContract(CONTRACT_STAKING);
     const tokenContract = useTokenContract(CONTRACT_TOKEN);
     let navigate = useNavigate();
-
-    //const { data: minStakeAmount } = useEtherSWR([CONTRACT_STAKING, "getMinimumRequiredLock", account]);
 
     const [amountToStake, setAmountToStake] = useState<string>("");
     const [stakeTx, setStakeTx] = useState<string>();
@@ -101,6 +101,7 @@ export const StakeKxa: React.FC = () => {
         }
     }
 
+    if (userStakedAmount !== 0) return <></>
     return (
         <fieldset className="stk">
             <legend>Stake your KXA now !</legend>

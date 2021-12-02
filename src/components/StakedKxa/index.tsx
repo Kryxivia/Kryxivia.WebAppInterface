@@ -7,7 +7,7 @@ import { CHAIN_INFO } from "../../constants/chain";
 import { useStakingContract } from "../../hooks/useContract";
 import { CONTRACT_STAKING } from "../StakeKxa";
 
-function useUserStakeAmount(account: string | undefined | null) {
+export function useUserStakeAmount(account: string | undefined | null) {
     const [amount, setAmount] = useState(0);
     const stakingContract = useStakingContract(CONTRACT_STAKING);
 
@@ -188,6 +188,7 @@ export const StakedKxa: React.FC = () => {
         }
     }
 
+    if (userStakedAmount === 0) return <></>
     return (
         <fieldset className="stk-g">
             <legend>Your KXA staked</legend>
