@@ -92,7 +92,7 @@ export const Mint = () => {
                 {!account && <p className="p">Connect your wallet to mint</p>}
                 {account && !hasAccess && (
                     <button className={!hasAccess ? "bt" : "bt bt-p"} onClick={(e) => doMint(e)} disabled={!hasAccess}>
-                        <span>You're not part of the alpha</span>
+                        <span>No rewards to claim</span>
                     </button>
                 )}
                 {account && hasAccess && (
