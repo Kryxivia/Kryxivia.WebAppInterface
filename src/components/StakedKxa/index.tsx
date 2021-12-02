@@ -47,11 +47,11 @@ function useGetStartBlock(account: string | undefined | null) {
 function useGetStartBlockTimestamp(startBlock: number) {
     const [startBlockTimestamp, setStartBlockTimestamp] = useState(0);
 
-    const {library} = useWeb3React()
+    const { library } = useWeb3React();
 
     useEffect(() => {
         const fetchBlock = async () => {
-            const result = await library.getBlock(startBlock)
+            const result = await library.getBlock(startBlock);
             const timestamp = result.timestamp * 1000;
             setStartBlockTimestamp(timestamp);
         };
@@ -156,28 +156,28 @@ export const StakedKxa: React.FC = () => {
             <div className="ins">
                 <div className="in inm">
                     <label htmlFor="staked">Your total KXA staked</label>
-                    <input type="text" name="staked" value={userStakedAmount} disabled />
+                    <input type="number" name="staked" value={userStakedAmount} disabled />
                 </div>
                 <div className="in inx">
                     <div className="btm">
-                        <button className="bt bt-nh" onClick={(e) => claim(e)} disabled={!isUnlocked}>
-                            <span>
+                        {!!userStakedAmount ? (
+                            <button className="bt bt-nh" onClick={(e) => claim(e)} disabled={!isUnlocked}>
                                 {!isUnlocked ? (
-                                    <>
-                                        {userStakedAmount > 0 ? (
-                                            <>
-                                                <small>Unlock date</small>
-                                                <strong>{unlockDate}</strong>
-                                            </>
-                                        ) : (
-                                            <strong>Nothing to claim</strong>
-                                        )}
-                                    </>
+                                    <span>
+                                        <small>Unlock date</small>
+                                        <strong>{unlockDate}</strong>
+                                    </span>
                                 ) : (
-                                    <strong>Claim</strong>
+                                    <span>
+                                        <strong>Unstake</strong>
+                                    </span>
                                 )}
-                            </span>
-                        </button>
+                            </button>
+                        ) : (
+                            <button className="bt bt-nh" disabled>
+                                <strong>No KXA staked</strong>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
