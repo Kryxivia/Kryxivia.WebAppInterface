@@ -221,20 +221,20 @@ export const StakedKxa: React.FC = () => {
                 </div>
             </div>
             {error && (
-                <p style={{ marginTop: "1rem", color: "red" }} id="stake-amount">
-                    ❌ {error}
-                </p>
+                <div className="notif danger" id="staked-amount">
+                    {error}
+                </div>
             )}
             {pending && (
-                <p style={{ marginTop: "1rem", color: "blue" }} id="stake-amount">
-                    ℹ️ {pending}
-                </p>
+                <div className="notif pending" id="staked-amount">
+                    {pending}
+                </div>
             )}
             {success && chainId && (
-                <p style={{ marginTop: "1rem", color: "rgb(var(--green))" }} id="stake-amount">
-                    ✅ {success + ' '}
+                <div className="notif success" id="staked-amount">
+                    {success + ' '}
                     <a style={{textDecoration: 'underline'}} href={`${CHAIN_INFO[chainId].explorer}tx/${unstakeTx}`} target="_blank" rel="noreferrer">View on BSCScan</a>
-                </p>
+                </div>
             )}
         </fieldset>
     );

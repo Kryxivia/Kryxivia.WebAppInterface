@@ -101,8 +101,10 @@ body:before{opacity:.3;content:'';position:fixed;left:0;top:0;width:100%;height:
 
 *:disabled{pointer-events:none!important;}
 
-.notif{font-size:13px;border-radius:var(--radius);padding:10px;text-align:left;margin-top:15px;background-color:#201d1c;}
+.notif{font-size:14px;border-radius:var(--radius);padding:10px;text-align:left;margin-top:15px;background-color:#201d1c;}
 .notif.danger{background-color:#fa4444;}
+.notif.success{background-color:rgb(var(--green));color:#201d1c;}
+.notif.pending{background-color:#446efa;}
 
 
 /*----------------------------------------------------< APP >---------------------------------------------------*/

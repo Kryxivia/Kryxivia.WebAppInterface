@@ -59,7 +59,13 @@ export const Mint = () => {
 
     const hasAccess = useHasAccess(account, data);
 
+    const resetFeedback = () => {
+        setMintError("");
+        setMintTx("");
+    };
+
     async function doMint(e: any) {
+        resetFeedback();
         e.preventDefault();
         const result = await MintService.claimReward();
         if (result.txHash) {
@@ -105,15 +111,15 @@ export const Mint = () => {
                 )}
             </div>
             {mintError && (
-                <div>
+                <div className="notif danger">
                     <span>{mintError}</span>
                 </div>
             )}
-            {chainId && mintTx && (
-                <div>
-                    <span>Minted successfully !</span>
-                    <a className="bt" style={{ marginLeft: "2rem" }} href={`${CHAIN_INFO[chainId].explorer}tx/${mintTx}`} target="_blank" rel="noreferrer">
-                        <span>View on BSCScan</span>
+            {mintTx && chainId && (
+                <div className="notif success">
+                    Minted successfully ! {" "}
+                    <a style={{ textDecoration: "underline" }} href={`${CHAIN_INFO[chainId].explorer}tx/${mintTx}`} target="_blank" rel="noreferrer">
+                        View on BSCScan
                     </a>
                 </div>
             )}

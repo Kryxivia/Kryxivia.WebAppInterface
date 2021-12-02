@@ -86,7 +86,7 @@ export const StakeKxa: React.FC = () => {
             if (txReceipt.status === 1) {
                 resetFeedback();
                 setSuccess(`Deposit successfully completed !`);
-                setStakeTx(`${txReceipt.transactionHash}`)
+                setStakeTx(`${txReceipt.transactionHash}`);
             }
             navigate("/");
         } catch (e: any) {
@@ -101,7 +101,7 @@ export const StakeKxa: React.FC = () => {
         }
     }
 
-    if (userStakedAmount !== 0) return <></>
+    if (userStakedAmount !== 0) return <></>;
     return (
         <fieldset className="stk">
             <legend>Stake your KXA now !</legend>
@@ -137,20 +137,22 @@ export const StakeKxa: React.FC = () => {
                 </div>
             )}
             {error && (
-                <p style={{ marginTop: "1rem", color: "red" }} id="stake-amount">
-                    ❌ {error}
-                </p>
+                <div className="notif danger" id="stake-amount">
+                    {error}
+                </div>
             )}
             {pending && (
-                <p style={{ marginTop: "1rem", color: "blue" }} id="stake-amount">
-                    ℹ️ {pending}
-                </p>
+                <div className="notif pending" id="stake-amount">
+                    {pending}
+                </div>
             )}
             {success && chainId && (
-                <p style={{ marginTop: "1rem", color: "rgb(var(--green))" }} id="stake-amount">
-                    ✅ {success + ' '}
-                    <a style={{textDecoration: 'underline'}} href={`${CHAIN_INFO[chainId].explorer}tx/${stakeTx}`} target="_blank" rel="noreferrer">View on BSCScan</a>
-                </p>
+                <div className="notif success" id="stake-amount">
+                    {success + ' '}
+                    <a style={{ textDecoration: "underline" }} href={`${CHAIN_INFO[chainId].explorer}tx/${stakeTx}`} target="_blank" rel="noreferrer">
+                        View on BSCScan
+                    </a>
+                </div>
             )}
         </fieldset>
     );
