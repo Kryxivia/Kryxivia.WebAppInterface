@@ -2,6 +2,8 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { CHAIN_INFO } from "../../constants/chain";
 import { useStakingContract } from "../../hooks/useContract";
 import { CONTRACT_STAKING } from "../StakeKxa";
 
@@ -135,19 +137,55 @@ function useIsUnlocked(date: Date) {
 }
 
 export const StakedKxa: React.FC = () => {
-    const { account } = useWeb3React();
+    const { account, library, chainId } = useWeb3React();
 
     const userStakedAmount = useUserStakeAmount(account);
     const startBlock = useGetStartBlock(account);
     const startBlockTimestamp = useGetStartBlockTimestamp(startBlock);
     const endBlock = useGetEndBlock(account);
     const { unlockDate, dateObj } = useUnlockDate(startBlock, endBlock, startBlockTimestamp);
-
     const isUnlocked = useIsUnlocked(dateObj);
+
+    let navigate = useNavigate();
+    const stakingContract = useStakingContract(CONTRACT_STAKING);
+    const [unstakeTx, setUnstakeTx] = useState<string>();
+    const [error, setError] = useState<string>();
+    const [pending, setPending] = useState<string>();
+    const [success, setSuccess] = useState<string>();
+
+    const resetFeedback = () => {
+        setError("");
+        setPending("");
+        setSuccess("");
+    };
 
     async function claim(e: any) {
         e.preventDefault();
-        console.log("ok");
+        if (stakingContract == null || userStakedAmount === 0) {
+            setError("Enter an amount to stake");
+            return;
+        }
+        try {
+            setPending("Pending: check your wallet extension to execute the chain transaction ...");
+            const result = await stakingContract.unStakeKXA();
+            setPending("Waiting for 2 confirmations ...");
+            const txReceipt = await library.waitForTransaction(result.hash, 2);
+            if (txReceipt.status === 1) {
+                resetFeedback();
+                setSuccess(`Deposit successfully completed !`);
+                setUnstakeTx(`${txReceipt.transactionHash}`)
+            }
+            navigate("/");
+        } catch (e: any) {
+            resetFeedback();
+            if (e && e?.data?.message !== undefined) {
+                setError(`${e.data.message}`);
+            } else if (e && e.message) {
+                setError(`${e.message}`);
+            } else {
+                setError(`Error: ${e}`);
+            }
+        }
     }
 
     return (
@@ -181,6 +219,22 @@ export const StakedKxa: React.FC = () => {
                     </div>
                 </div>
             </div>
+            {error && (
+                <p style={{ marginTop: "1rem", color: "red" }} id="stake-amount">
+                    ❌ {error}
+                </p>
+            )}
+            {pending && (
+                <p style={{ marginTop: "1rem", color: "blue" }} id="stake-amount">
+                    ℹ️ {pending}
+                </p>
+            )}
+            {success && chainId && (
+                <p style={{ marginTop: "1rem", color: "rgb(var(--green))" }} id="stake-amount">
+                    ✅ {success + ' '}
+                    <a style={{textDecoration: 'underline'}} href={`${CHAIN_INFO[chainId].explorer}tx/${unstakeTx}`} target="_blank" rel="noreferrer">View on BSCScan</a>
+                </p>
+            )}
         </fieldset>
     );
 };
