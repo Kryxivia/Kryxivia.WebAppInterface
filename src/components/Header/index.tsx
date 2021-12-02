@@ -26,9 +26,9 @@ export const Header: React.FC = () => {
         return (
             <header id="h">
                 <div className="l">
-                    <a href="staking.html" className="lg" title="Kryxivia">
+                    <Link to="/" className="lg" title="Kryxivia">
                         <img src={Logo} alt="Kryxivia" />
-                    </a>
+                    </Link>
                     <nav id="n">
                         <ul>
                             <li>
