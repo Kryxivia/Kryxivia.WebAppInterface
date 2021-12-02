@@ -44,6 +44,24 @@ function useGetStartBlock(account: string | undefined | null) {
     return startBlock;
 }
 
+function useGetStartBlockTimestamp(startBlock: number) {
+    const [startBlockTimestamp, setStartBlockTimestamp] = useState(0);
+
+    const {library} = useWeb3React()
+
+    useEffect(() => {
+        const fetchBlock = async () => {
+            const result = await library.getBlock(startBlock)
+            const timestamp = result.timestamp * 1000;
+            setStartBlockTimestamp(timestamp);
+        };
+
+        fetchBlock();
+    }, [library, startBlock]);
+
+    return startBlockTimestamp;
+}
+
 function useGetEndBlock(account: string | undefined | null) {
     const [endBlock, setEndBlock] = useState(0);
     const stakingContract = useStakingContract(CONTRACT_STAKING);
@@ -64,7 +82,7 @@ function useGetEndBlock(account: string | undefined | null) {
     return endBlock;
 }
 
-function useUnlockDate(startBlock: number, endBlock: number) {
+function useUnlockDate(startBlock: number, endBlock: number, startBlockTimestamp: number) {
     const [unlockDate, setUnlockDate] = useState<string>();
     const [dateObj, setDateObj] = useState<Date>(new Date());
 
@@ -76,7 +94,7 @@ function useUnlockDate(startBlock: number, endBlock: number) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const end = new Date();
+            const end = new Date(startBlockTimestamp);
             const diff = endBlock - startBlock;
             // 27000 is average BSC block per day
             const daysLeft = diff / 27000;
@@ -88,7 +106,7 @@ function useUnlockDate(startBlock: number, endBlock: number) {
         };
 
         fetchData();
-    }, [endBlock, setUnlockDate, startBlock]);
+    }, [endBlock, setUnlockDate, startBlock, startBlockTimestamp]);
 
     return { unlockDate, dateObj };
 }
@@ -121,8 +139,9 @@ export const StakedKxa: React.FC = () => {
 
     const userStakedAmount = useUserStakeAmount(account);
     const startBlock = useGetStartBlock(account);
+    const startBlockTimestamp = useGetStartBlockTimestamp(startBlock);
     const endBlock = useGetEndBlock(account);
-    const { unlockDate, dateObj } = useUnlockDate(startBlock, endBlock);
+    const { unlockDate, dateObj } = useUnlockDate(startBlock, endBlock, startBlockTimestamp);
 
     const isUnlocked = useIsUnlocked(dateObj);
 
