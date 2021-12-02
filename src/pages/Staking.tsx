@@ -4,8 +4,8 @@ import { StakeKxa } from "../components/StakeKxa";
 import { StakedKxa } from "../components/StakedKxa";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import { useHasAccess } from "./Mint";
 import { Rewards } from "../components/Rewards";
+import { AlphaState } from "../components/AlphaState";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -14,14 +14,11 @@ const Staking: React.FC = () => {
 
     const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
 
-    const hasAccess = useHasAccess(account, data);
-
     if (error) return <>An error has occurred.</>;
     if (!data) return <>Loading...</>;
     return (
         <>
-            {account && hasAccess && <div className="alert">YOU HAVE ACCESS TO ALPHA.</div>}
-            {account && !hasAccess && <div className="alert">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
+            {account && <AlphaState />}
             <div className="app-c">
                 <h1>
                     Stake your <strong>KXA</strong> now and <strong>receive NFT Rewards</strong> !

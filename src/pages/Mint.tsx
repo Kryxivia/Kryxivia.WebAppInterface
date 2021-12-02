@@ -1,6 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
+import { AlphaState } from "../components/AlphaState";
 import { Rewards } from "../components/Rewards";
 import { CHAIN_INFO } from "../constants/chain";
 import MintService from "../services/mintService";
@@ -73,8 +74,7 @@ export const Mint = () => {
     if (!data) return <>Loading...</>;
     return (
         <>
-            {account && hasAccess && <div className="alert">YOU HAVE ACCESS TO ALPHA.</div>}
-            {account && !hasAccess && <div className="alert">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
+            {account && <AlphaState />}
             <div className="app-c">
                 <h1>
                     Get my <strong>NFT Rewards</strong> of Kryxivia !
