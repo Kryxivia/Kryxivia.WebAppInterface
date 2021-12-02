@@ -33,7 +33,7 @@ picture img{max-width:100%;width:100%;}
     --fs_title:calc(20px + 15 * (100vw - 320px) / 1080);
     --cubic:cubic-bezier(.305,.045,.355,1);
     --transi:.25s;
-    --ct:calc(650px + 400 * (100vw - 320px) / 1080);
+    --ct:calc(800px + 300 * (100vw - 320px) / 1080);
     --opac:.5;
     --blur:blur(5px);
     --bg_rgb:7,3,1;
@@ -80,9 +80,9 @@ picture img{max-width:100%;width:100%;}
 /* * */
 
 html, body{font-size:calc(13px + 3 * (100vw - 320px) / 1080);color:var(--txt);line-height:1;font-family:var(--ff);font-weight:500;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-html{background:url(../img/bg.jpg) center center repeat-y var(--bg);background-size:100% auto;}
+html{background:var(--bg);background-size:100% auto;}
 
-body:before{opacity:.5;content:'';position:fixed;left:0;top:0;width:100%;height:100%;background:url(../img/bg-ix.jpg) center center no-repeat;background-size:cover;}
+body:before{opacity:.3;content:'';position:fixed;left:0;top:0;width:100%;height:100%;background:url(../img/bg-ix.jpg) center center no-repeat;background-size:cover;}
 
 .ct{width:calc(800px + 300 * (100vw - 320px) / 1080);max-width:85%;margin:auto;}
 
@@ -99,6 +99,11 @@ body:before{opacity:.5;content:'';position:fixed;left:0;top:0;width:100%;height:
 .bt-p:not(.bt-nh):hover{background:transparent;}
 .bt-p:not(.bt-nh):hover:before{transform:translateX(-48%);}
 
+*:disabled{pointer-events:none!important;}
+
+.notif{font-size:13px;border-radius:var(--radius);padding:10px;text-align:left;margin-top:15px;background-color:#201d1c;}
+.notif.danger{background-color:#fa4444;}
+
 
 /*----------------------------------------------------< APP >---------------------------------------------------*/
 
@@ -106,9 +111,9 @@ body:before{opacity:.5;content:'';position:fixed;left:0;top:0;width:100%;height:
 
 .top-h{position:fixed;left:0;top:0;width:40%;min-width:calc(250px + 150 * (100vw - 320px) / 1080);z-index:10;}
 .top-h-r{position:fixed;right:0;top:0;width:60%;z-index:5;min-width:calc(350px + 150 * (100vw - 320px) / 1080);}
-#h{z-index:9999;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;position:fixed;top:calc(15px + 5 * (100vw - 320px) / 1080);left:0;width:100%;}
+#h{padding:0 calc(15px + 5 * (100vw - 320px) / 1080);background-color:var(--bg_blur);box-shadow:0 0 0 1px rgba(255,255,255,.05), 0 3px 10px rgba(0,0,0,.2);border-radius:0 0 var(--radius) var(--radius);backdrop-filter:var(--blur);width:var(--ct);z-index:9999;max-width:calc(100% - var(--pad)*2);display:flex;align-items:center;justify-content:space-between;position:fixed;transform:translateX(-50%);top:0;left:50%;pointer-events:none;}
 #h a{pointer-events:auto;}
-#h .lg{width:calc(250px + 30 * (100vw - 320px) / 1080);display:block;transform:translateY(-12%);}
+#h .lg{width:calc(200px + 30 * (100vw - 320px) / 1080);display:block;transform:translateY(-12%);}
 #h .l{display:flex;align-items:center;}
 
 /* header */
@@ -118,8 +123,8 @@ body:before{opacity:.5;content:'';position:fixed;left:0;top:0;width:100%;height:
 
 /* main */
 
-#m{align-items:flex-start;max-width:calc(100% - var(--pad)*2);display:flex;width:calc(800px + 300 * (100vw - 320px) / 1080);margin:auto;z-index:500;padding:calc(150px + 25 * (100vw - 320px) / 1080) 0 calc(50px + 10 * (100vw - 320px) / 1080);}
-#m .m-r{position:sticky;top:0;padding:calc(30px + 15 * (100vw - 320px) / 1080);padding-left:calc(50px + 30 * (100vw - 320px) / 1080);display:flex;align-items:center;}
+#m{align-items:flex-start;max-width:calc(100% - var(--pad)*2);display:flex;width:var(--ct);margin:auto;z-index:500;padding:calc(150px + 25 * (100vw - 320px) / 1080) 0 calc(50px + 10 * (100vw - 320px) / 1080);}
+#m .m-r{z-index:-1;bottom:0;right:0;padding:calc(30px + 15 * (100vw - 320px) / 1080);padding-left:calc(50px + 30 * (100vw - 320px) / 1080);display:flex;align-items:center;}
 #m .m-r .kxa{width:calc(150px + 20 * (100vw - 320px) / 1080);animation:kxa 3s infinite linear;}
 #m .m-r .lock{width:calc(35px + 15 * (100vw - 320px) / 1080);position:absolute;bottom:0;left:50%;transform:translate(-50%, 40%);}
 

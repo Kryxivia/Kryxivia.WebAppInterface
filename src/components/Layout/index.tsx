@@ -21,12 +21,6 @@ const Layout = () => {
                     </div>
                     <div className="copy">Kryxivia.io © 2021-2022</div>
                 </div>
-                <div className="m-r">
-                    <div>
-                        <img src={Kxa} alt="KXA • Kryxivia" className="kxa" />
-                        <img src={Lock} alt="Staking" className="lock" />
-                    </div>
-                </div>
             </main>
             <img src={IllusTop} className="top-h" alt="Kryxivia" />
             <img src={IllusTopR} className="top-h-r" alt="Kryxivia" />
