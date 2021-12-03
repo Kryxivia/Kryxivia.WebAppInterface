@@ -25,3 +25,16 @@ export function getContract(address: any, ABI: any, library: any, account: any) 
         throw Error(`Invalid 'address' parameter '${address}'.`);
     }
 }
+
+export function formatCurrency(num: number, min: number, max: number) {
+    const formatConfig = {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: min,
+      maximumFractionDigits: max,
+      currencyDisplay: 'symbol',
+    }
+    const curFormatter = new Intl.NumberFormat('en-US', formatConfig)
+  
+    return curFormatter.format(num)
+  }
