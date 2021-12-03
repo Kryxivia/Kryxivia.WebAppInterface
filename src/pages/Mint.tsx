@@ -80,20 +80,32 @@ export const Mint = () => {
     return (
         <>
             <h1>
-                Get my <strong>NFT Rewards</strong> of Kryxivia !
+                Get my <strong>NFT Rewards</strong> of Kryxivia Fireworks!
             </h1>
             <div className="intro">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                <p>1000 rare and limited Kryxivia Fireworks to be used in-game.</p>
             </div>
             <div className="p">
                 <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus quo iste praesentium alias dolores a accusamus harum, totam quaerat
-                    dolore. Quod facilis id est expedita ipsum nobis dolor, nihil mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Kryxivia Fireworks are in-game items that you can use in the Kryxivia world, they produce amazing animations in the City that everyone will surely notice, the castable spell is reusable. This is an Alpha limited NFT.<br/><br/>
+                Once you are whitelisted for the alpha access, come here and mint your Kryxivia Firework for free, if they are not all minted yet!
+                <br/>By claiming your rewards, you will have a random chance to have one of the below level of Purity on your Kryxivia Firework.
+                <br/>
+                Six differents Kryxivia Fireworks exist:<br/><br/>
+                <ul>
+                    <li>• Kryxivia Fireworks - 20% - Only 350 to be looted</li>
+                    <li>• Kryxivia Fireworks - 40% - Only 250 to be looted</li>
+                    <li>• Kryxivia Fireworks - 60% - Only 200 to be looted</li>
+                    <li>• Kryxivia Fireworks - 80% - Only 150 to be looted</li>
+                    <li>• Kryxivia Fireworks - 90% - Only 40 to be looted</li>
+                    <li>• Kryxivia Fireworks - 100%- Only 10 to be looted</li>
+                </ul>
+
                 </p>
             </div>
-            <h2>Discover NFT Rewards on Kryxivia !</h2>
+            <h2>Discover Alpha NFT Rewards on Kryxivia !</h2>
             <Rewards />
-            <h2>Let's go to my first Kryxivia NFT !</h2>
+            <h2>Let's go to my first Kryxivia NFT</h2>
             <div className={!hasAccess ? "" : "btmi"}>
                 {!account && <p className="p">Connect your wallet to mint</p>}
                 {account && !hasAccess && (
