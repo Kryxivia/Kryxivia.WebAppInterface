@@ -230,3 +230,39 @@ body:before{opacity:.3;content:'';position:fixed;left:0;top:0;width:100%;height:
 #app .rw{--n:2;}
 
 }
+
+
+.mint-table {
+    border:1px solid var(--primary);
+    border-collapse: separate;
+    border-radius: 12px;
+    overflow:hidden;
+    width: 100%;
+}
+.mint-table thead {
+    color: white;
+}
+.mint-table table {
+    background-color: var(--primary);
+}
+
+.mint-table td, th {
+    border-left:solid var(--primary) 1px;
+    border-top:solid var(--primary) 1px;
+}
+
+.mint-table th {
+    border-top: none;
+    padding:5px;
+    background: var(--primary);
+    color: white;
+    font-weight:bold;
+    font-size:calc(13px + 2 * (100vw - 320px) / 1080);
+}
+.mint-table td {
+    padding: 6px 16px 6px 16px;
+}
+
+.mint-table td:first-child, th:first-child {
+    border-left: none;
+}
