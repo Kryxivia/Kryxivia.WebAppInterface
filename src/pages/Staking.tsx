@@ -61,7 +61,20 @@ const Staking: React.FC = () => {
                     </>
                 )}
             </form>
-            {!account && <p className="p">Connect your wallet to stake</p>}
+            <div style={{display: 'flex', flexDirection: 'column', width:'100%', alignItems: 'center'}}>
+                {!account && <button className="bt" disabled>Connect your wallet to stake</button>}
+                <p className="p" style={{marginTop: '2rem'}}>
+                    Read Staking contract audit{" "}
+                    <a
+                        style={{ textDecoration: "underline" }}
+                        href="https://github.com/solidproof/smart-contract-audits/blob/main/SmartContract_Audit_Solidproof_KryxiviaStaking.pdf"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        here
+                    </a>
+                </p>
+            </div>
         </>
     );
 };
