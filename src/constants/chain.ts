@@ -16,6 +16,7 @@ export const L1_CHAIN_IDS = [
 export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
 
 export interface L1ChainInfo {
+  readonly id: number
   readonly blockWaitMsBeforeWarning?: number
   readonly explorer: string
   readonly label: string
@@ -34,12 +35,14 @@ export type ChainInfo = { readonly [chainId: number]: L1ChainInfo } & {
 
 export const CHAIN_INFO: ChainInfo = {
   [SupportedChainId.MAINNET]: {
+    id: 56,
     explorer: 'https://bscscan.com/',
     label: 'Binance Smart Chain Mainnet',
     rpcUrls: ['https://bsc-dataseed.binance.org/', 'https://bsc-dataseed1.defibit.io/'],
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
   },
   [SupportedChainId.TESTNET]: {
+    id: 97,
     explorer: 'https://testnet.bscscan.com/',
     label: 'Binance Smart Chain Testnet',
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/', 'https://data-seed-prebsc-2-s1.binance.org:8545/'],
