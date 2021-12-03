@@ -180,6 +180,7 @@ body:before{opacity:.3;content:'';position:fixed;left:0;top:0;width:100%;height:
 .fm .stk-g .bt small{display:block;font-size:10px;font-weight:normal;}
 .fm .stk-g .bt strong{font-size:14px;}
 
+.mint {display: flex;justify-content: space-between;}
 .btmi{animation:mint 2s infinite linear;display:inline-block;}
 
 @keyframes mint{

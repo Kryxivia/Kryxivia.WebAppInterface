@@ -87,27 +87,33 @@ export const Mint = () => {
             </div>
             <div className="p">
                 <p>
-                Kryxivia Fireworks are in-game items that you can use in the Kryxivia world, they produce amazing animations in the City that everyone will surely notice, the castable spell is reusable. This is an Alpha limited NFT.<br/><br/>
-                Once you are whitelisted for the alpha access, come here and mint your Kryxivia Firework for free, if they are not all minted yet!
-                <br/>By claiming your rewards, you will have a random chance to have one of the below level of Purity on your Kryxivia Firework.
-                <br/>
-                Six differents Kryxivia Fireworks exist:<br/><br/>
-                <ul>
-                    <li>• Kryxivia Fireworks - 20% - Only 350 to be looted</li>
-                    <li>• Kryxivia Fireworks - 40% - Only 250 to be looted</li>
-                    <li>• Kryxivia Fireworks - 60% - Only 200 to be looted</li>
-                    <li>• Kryxivia Fireworks - 80% - Only 150 to be looted</li>
-                    <li>• Kryxivia Fireworks - 90% - Only 40 to be looted</li>
-                    <li>• Kryxivia Fireworks - 100%- Only 10 to be looted</li>
-                </ul>
-
+                    Kryxivia Fireworks are in-game items that you can use in the Kryxivia world, they produce amazing animations in the City that everyone will
+                    surely notice, the castable spell is reusable. This is an Alpha limited NFT.
+                    <br />
+                    <br />
+                    Once you are whitelisted for the alpha access, come here and mint your Kryxivia Firework for free, if they are not all minted yet!
+                    <br />
+                    By claiming your rewards, you will have a random chance to have one of the below level of Purity on your Kryxivia Firework.
+                    <br />
+                    Six differents Kryxivia Fireworks exist:
+                    <br />
+                    <br />
+                    <ul>
+                        <li>• Kryxivia Fireworks - 20% - Only 350 to be looted</li>
+                        <li>• Kryxivia Fireworks - 40% - Only 250 to be looted</li>
+                        <li>• Kryxivia Fireworks - 60% - Only 200 to be looted</li>
+                        <li>• Kryxivia Fireworks - 80% - Only 150 to be looted</li>
+                        <li>• Kryxivia Fireworks - 90% - Only 40 to be looted</li>
+                        <li>• Kryxivia Fireworks - 100%- Only 10 to be looted</li>
+                    </ul>
                 </p>
             </div>
             <h2>Discover Alpha NFT Rewards on Kryxivia !</h2>
             <Rewards />
             <h2>Let's go to my first Kryxivia NFT</h2>
+            <div className="mint">
             <div className={!hasAccess ? "" : "btmi"}>
-                {!account && <p className="p">Connect your wallet to mint</p>}
+                {!account && <button className="bt" disabled>Connect your wallet to mint</button>}
                 {account && !hasAccess && (
                     <button className={!hasAccess ? "bt" : "bt bt-p"} onClick={(e) => doMint(e)} disabled={!hasAccess}>
                         <span>No rewards to claim</span>
@@ -122,6 +128,10 @@ export const Mint = () => {
                     </button>
                 )}
             </div>
+                <button className="bt" disabled>
+                    <span>1000 Fireworks left to mint</span>
+                </button>
+            </div>
             {mintError && (
                 <div className="notif danger">
                     <span>{mintError}</span>
@@ -129,7 +139,7 @@ export const Mint = () => {
             )}
             {mintTx && chainId && (
                 <div className="notif success">
-                    Minted successfully ! {" "}
+                    Minted successfully !{" "}
                     <a style={{ textDecoration: "underline" }} href={`${CHAIN_INFO[chainId].explorer}tx/${mintTx}`} target="_blank" rel="noreferrer">
                         View on BSCScan
                     </a>
