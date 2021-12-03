@@ -49,7 +49,7 @@ const Staking: React.FC = () => {
                     </span>
                 </p>
             </div>
-            <h2>Discover NFT Rewards on Kryxivia !</h2>
+            <h2>Discover Alpha NFT Rewards on Kryxivia !</h2>
             <Rewards />
             <h2>Stake your KXA Token</h2>
             <form className="fm">
