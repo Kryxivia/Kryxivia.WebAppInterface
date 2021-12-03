@@ -5,11 +5,12 @@ import { StakedKxa } from "../components/StakedKxa";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import { Rewards } from "../components/Rewards";
+import { defaultChain } from "../components/Web3Status";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Staking: React.FC = () => {
-    const { account } = useWeb3React();
+    const { account, chainId } = useWeb3React();
 
     const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
 
@@ -53,9 +54,10 @@ const Staking: React.FC = () => {
             <Rewards />
             <h2>Stake your KXA Token</h2>
             <form className="fm">
-                <StakingStats />
-                {account && (
+                {!account && <StakingStats />}
+                {account && chainId && defaultChain === (chainId as number) && (
                     <>
+                        <StakingStats />
                         <StakeKxa />
                         <StakedKxa />
                     </>

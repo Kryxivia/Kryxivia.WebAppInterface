@@ -5,15 +5,21 @@ import { Header } from "../../components/Header";
 import { Outlet } from "react-router";
 import { AlphaState } from "../AlphaState";
 import { useWeb3React } from "@web3-react/core";
+import { defaultChain } from "../Web3Status";
+import { CHAIN_INFO } from "../../constants/chain";
 
 const Layout = () => {
-    const { account } = useWeb3React();
+    const { account, chainId } = useWeb3React();
     return (
         <>
             <Header />
             <main id="m">
                 <div id="app">
-                {account && <AlphaState />}
+                    {account && chainId && defaultChain === (chainId as number) ? (
+                        <AlphaState />
+                    ) : (
+                        <div className="alert base">Please switch to {CHAIN_INFO[defaultChain].label}</div>
+                    )}
                     <div className="app-c">
                         <Outlet />
                     </div>

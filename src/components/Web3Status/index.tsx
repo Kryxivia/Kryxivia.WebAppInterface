@@ -8,10 +8,11 @@ import { CHAIN_INFO } from "../../constants/chain";
 import { TokenBalance } from "../TokenBalance";
 import { EthSWRConfig } from "ether-swr";
 
+export const defaultChain = Number(process.env.REACT_APP_DEFAULT_CHAIN_ID);
+
 const Web3Status: React.FC = () => {
     const { active, error, account, library, chainId } = useWeb3React();
     const contextNetwork = useWeb3React(NetworkContextName);
-    const defaultChain = Number(process.env.REACT_APP_DEFAULT_CHAIN_ID);
 
     useEffect(() => {
         const session = JSON.parse(localStorage.getItem("session") as string) || "";
