@@ -1,7 +1,7 @@
-import { useWeb3React } from '@web3-react/core';
-import React, { useEffect, useState } from 'react'
-import { useStakingContract } from '../../hooks/useContract';
-import { CONTRACT_STAKING } from '../StakeKxa';
+import { useWeb3React } from "@web3-react/core";
+import React, { useEffect, useState } from "react";
+import { useStakingContract } from "../../hooks/useContract";
+import { CONTRACT_STAKING } from "../StakeKxa";
 
 function useGetValidatedState(account: string | undefined | null) {
     const [isValidated, setIsValidated] = useState(false);
@@ -23,14 +23,13 @@ function useGetValidatedState(account: string | undefined | null) {
 }
 
 export const AlphaState = () => {
-
     const { account } = useWeb3React();
     const hasAccess = useGetValidatedState(account);
 
-        return (
-            <>
-            {account && hasAccess && <div className="alert">YOU HAVE ACCESS TO ALPHA.</div>}
-            {account && !hasAccess && <div className="alert">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
-            </>
-        );
-}
+    return (
+        <>
+            {account && hasAccess && <div className="alert success">YOU HAVE ACCESS TO ALPHA.</div>}
+            {account && !hasAccess && <div className="alert base">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
+        </>
+    );
+};

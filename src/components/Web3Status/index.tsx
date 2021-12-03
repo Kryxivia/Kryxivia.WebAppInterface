@@ -40,7 +40,7 @@ const Web3Status: React.FC = () => {
                     <div className="bt bt-has">{shortenAddress(account)}</div>
                 </EthSWRConfig>
             )}
-            {error && <div className="bt">{error instanceof UnsupportedChainIdError ? `${CHAIN_INFO[defaultChain].label}` : Error}</div>}
+            {error && <div className="bt">{error instanceof UnsupportedChainIdError ? `Switch to ${CHAIN_INFO[defaultChain].label}` : Error}</div>}
             {(contextNetwork.active || active) && !account && <Wallet />}
         </div>
     );
