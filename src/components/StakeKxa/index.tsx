@@ -59,8 +59,7 @@ export const StakeKxa: React.FC = () => {
             return;
         }
         const asNumber: number = parseFloat(amountToStake);
-        //get value from contract
-        if (asNumber <= 15000) {
+        if (asNumber < Number(minStakeAmount)) {
             setError(`Invalid amount to stake needs to be superior than ${asNumber} KXA`);
             return;
         }
