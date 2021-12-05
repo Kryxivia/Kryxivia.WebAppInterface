@@ -1,6 +1,7 @@
 import { BigNumber } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 import { useStakingContract, useTokenContract } from "../../hooks/useContract";
 import { formatCurrency } from "../../utils";
 import { CONTRACT_STAKING, CONTRACT_TOKEN } from "../StakeKxa";
@@ -49,7 +50,7 @@ function useTotalStakedValue(totalLocked: number, tokenPrice: number) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const formatted = formatCurrency(totalLocked * tokenPrice, 0, 2)
+            const formatted = formatCurrency(totalLocked * tokenPrice, 0, 2, 'USD')
             setAmount(formatted);
         };
 
@@ -59,14 +60,24 @@ function useTotalStakedValue(totalLocked: number, tokenPrice: number) {
     return amount;
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export const StakingStats: React.FC = () => {
 
-    
+    const URL = `${process.env.REACT_APP_MANAGER_URL}api/v1/stats/price/KXA`
+    const { data, error } = useSWR(URL, fetcher);
     const totalLocked = useTotalLocked();
     const totalStakers = useTotalStakers();
-    const tokenPrice = 0.01725
+    const [tokenPrice, setTokenPrice] = useState(0)
     const totalStakedValue = useTotalStakedValue(totalLocked, tokenPrice)
 
+    useEffect(() => {
+        console.log(data?.price)    
+        setTokenPrice(data?.price)
+    }, [tokenPrice, data])
+
+    if (error) return <>Can't fetch price</>;
+    if (!data) return <>Loading...</>;
     return (
         <fieldset>
             <legend>Staking informations</legend>
