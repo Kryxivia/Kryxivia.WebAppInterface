@@ -23,7 +23,7 @@ const Layout = () => {
                     <div className="app-c">
                         <Outlet />
                     </div>
-                    <div className="copy">Kryxivia.io © 2021-2022</div>
+                    <div className="copy">Kryxivia © 2021. All rights reserved.</div>
                 </div>
             </main>
             <img src={IllusTop} className="top-h" alt="Kryxivia" />

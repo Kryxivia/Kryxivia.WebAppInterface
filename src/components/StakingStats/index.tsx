@@ -64,7 +64,7 @@ export const StakingStats: React.FC = () => {
     
     const totalLocked = useTotalLocked();
     const totalStakers = useTotalStakers();
-    const tokenPrice = 0.01725
+    const tokenPrice = 0.15
     const totalStakedValue = useTotalStakedValue(totalLocked, tokenPrice)
 
     return (
@@ -81,7 +81,7 @@ export const StakingStats: React.FC = () => {
                 </div>
                 <div className="in">
                     <label htmlFor="total-kxa-staked-value">Total KXA $ staked</label>
-                    <input type="text" name="total-kxa-staked-value" value={totalStakedValue} disabled />
+                    <input type="text" name="total-kxa-staked-value" value={'~ ' + totalStakedValue} disabled />
                 </div>
             </div>
         </fieldset>

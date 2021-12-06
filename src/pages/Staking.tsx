@@ -26,11 +26,11 @@ const Staking: React.FC = () => {
             </div>
             <div className="p">
                 <p>
-                    By locking at least 15,000 KXA in this smart-contract for a fixed duration of <i>1 month</i>, you will have the chance of winning an unique
+                    By locking at least 15,000 KXA in this smart-contract for a fixed duration of <i>~ 1 month</i>, you will have the chance of winning an unique
                     NFT in the Kryxivia world and be selected to play the closed Alpha of Kryxivia.
                     <br />
                     <br />
-                    We will select participants in the Alpha time by time with multiple batch when we judge that the Kryxivia Alpha is ready to accept more
+                    We will select participants in the Alpha time by time with multiple batch when the servers of the Kryxivia Alpha are ready to accept more
                     players, which mean that just by staking in the contract get you the potential chance to join, we are selecting randomly and based on the
                     amount of KXA you stake: the more you decide to stake, the best chance you have to be selected.
                     <br />
