@@ -26,10 +26,10 @@ export function getContract(address: any, ABI: any, library: any, account: any) 
     }
 }
 
-export function formatCurrency(num: number, min: number, max: number) {
+export function formatCurrency(num: number, min: number, max: number, currency: string) {
     const formatConfig = {
       style: 'currency',
-      currency: 'USD',
+      currency: currency,
       minimumFractionDigits: min,
       maximumFractionDigits: max,
       currencyDisplay: 'symbol',
