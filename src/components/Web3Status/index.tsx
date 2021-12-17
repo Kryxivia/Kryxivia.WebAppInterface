@@ -15,8 +15,8 @@ const Web3Status: React.FC = () => {
     const contextNetwork = useWeb3React(NetworkContextName);
 
     useEffect(() => {
-        const session = JSON.parse(localStorage.getItem("session") as string) || "";
-        if (!!(library && account) && session === "") {
+        //const session = JSON.parse(localStorage.getItem("session") as string) || "";
+        if (!!(library && account)) {
             library
                 .getSigner(account)
                 .signMessage(process.env.REACT_APP_SIGN_KEY)
