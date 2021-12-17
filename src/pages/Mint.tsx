@@ -56,6 +56,7 @@ export const Mint = () => {
     const [mintTx, setMintTx] = useState<string>();
     const [mintError, setMintError] = useState<string>();
     const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
+    const { data: claimed } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/claimed`, fetcher);
 
     const hasAccess = useHasAccess(account, data);
 
@@ -76,7 +77,7 @@ export const Mint = () => {
     }
 
     if (error) return <>An error has occurred.</>;
-    if (!data) return <>Loading...</>;
+    if (!data || !claimed) return <>Loading...</>;
     return (
         <>
             <h1>
@@ -166,7 +167,7 @@ export const Mint = () => {
                     )}
                 </div>
                 <button className="bt" disabled>
-                    <span>1000 Fireworks left to mint</span>
+                    <span>{1000 - claimed} Fireworks left to mint</span>
                 </button>
             </div>
             {mintError && (
