@@ -171,6 +171,7 @@ body:before{opacity:.3;content:'';position:fixed;left:0;top:0;width:100%;height:
 .fm .inx{width:auto;display:flex;align-items:flex-end;}
 .fm .stk{border-color:rgba(var(--primary_rgb),.8);}
 .fm .stk legend{background:linear-gradient(to right, var(--primary), var(--secondary));}
+.fm .stk .copy-block{line-height:120%; margin: 10px 0 10px 0;}
 .fm .stk-g{border-color:rgba(var(--green),.5);box-shadow:0 0 15px rgba(var(--green),.2), 0 0 15px rgba(var(--green),.3) inset;}
 .fm .stk-g legend{background-color:rgb(var(--green));color:var(--bg);box-shadow:0 0 25px rgba(var(--green),1);}
 .fm .stk-g input{color:rgb(var(--green))!important;box-shadow:0 0 0 1px rgba(var(--green), .1)!important;}
