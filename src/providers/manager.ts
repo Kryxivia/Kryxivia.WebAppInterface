@@ -44,8 +44,8 @@ export default class ManagerProvider {
         contactDiscord: string,
         contactTelegram: string,
         contactEmail: string,
-    ): Promise<RegisterAlpha> {
-        return new Promise<RegisterAlpha>((resolve, reject) => {
+    ): Promise<Boolean> {
+        return new Promise<Boolean>((resolve, reject) => {
             fetch(`${this.baseUrl}api/v1/alpha/infos`, {
                 method: "post",
                 body: JSON.stringify({
@@ -59,7 +59,7 @@ export default class ManagerProvider {
                 },
             })
                 .then((res: any) => {
-                    res.status === 200 ? resolve(res.json() as RegisterAlpha) : reject(res.text() as string);
+                    res.status === 200 || res.status === 304 ? resolve(true) : reject(res.text() as string);
                 })
                 .catch((error: any) => {
                     reject(error)

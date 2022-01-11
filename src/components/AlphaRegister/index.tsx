@@ -31,7 +31,7 @@ export const AlphaRegister: React.FC = () => {
 
         if (isLoggedIn) {
             const result = await RegisterAlphaService.register(contactDiscord, contactTelegram, contactEmail);
-            if (result.discord || result.telegram || result.email) {
+            if (result) {
                 setRegisterMessage("Registered Successfully!");
             } else {
                 setRegisterMessage(result as any);

@@ -2,12 +2,12 @@ import ManagerProvider from "../providers/manager"
 import { RegisterAlpha } from "../providers/responses/register_alpha";
 
 export default class RegisterAlphaService {
-    public static async register(contactDiscord: string, contactTelegram: string, contactEmail: string): Promise<RegisterAlpha>
+    public static async register(contactDiscord: string, contactTelegram: string, contactEmail: string): Promise<Boolean>
     {
         try
         {
             const session = JSON.parse(localStorage.getItem('session') as string);
-            const result: RegisterAlpha = await ManagerProvider.registerAlphaRequest(
+            const result = await ManagerProvider.registerAlphaRequest(
                 session.token,
                 contactDiscord,
                 contactTelegram,
