@@ -28,7 +28,7 @@ function CustomLinkExternal({ children, to, ...props }: LinkProps) {
   
     return (
       <div>
-        <a target="_blank" href={to.toString()}
+        <a target="_blank" rel="noreferrer" href={to.toString()}
           className={match ? "bt bt-act" : "bt"}
           {...props}
         >

@@ -79,7 +79,7 @@ export const StakingStats: React.FC = () => {
     if (!data) return <>Loading...</>;
     return (
         <fieldset>
-            <legend>Staking informations</legend>
+            <legend>Staking Information</legend>
             <div className="ins">
                 <div className="in">
                     <label htmlFor="total-kxa-user">Total of users staking KXA</label>

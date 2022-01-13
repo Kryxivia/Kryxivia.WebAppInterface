@@ -2,6 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { useStakingContract } from "../../hooks/useContract";
 import { CONTRACT_STAKING } from "../StakeKxa";
+import { AlphaRegister } from "../AlphaRegister";
 
 function useGetValidatedState(account: string | undefined | null) {
     const [isValidated, setIsValidated] = useState(false);
@@ -28,7 +29,11 @@ export const AlphaState = () => {
 
     return (
         <>
-            {account && hasAccess && <div className="alert success">YOU HAVE ACCESS TO ALPHA.</div>}
+            {account && hasAccess && <div>
+                <div className="alert success">YOU HAVE ACCESS TO ALPHA.</div>
+                <AlphaRegister />
+            </div>
+            }
             {account && !hasAccess && <div className="alert base">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
         </>
     );
