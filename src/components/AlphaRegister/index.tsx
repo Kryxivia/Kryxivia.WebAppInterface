@@ -104,8 +104,8 @@ export const AlphaRegister: React.FC = () => {
                         </div>
 
                         { registerMessage &&
-                        <div className="copy-block">
-                            { registerMessage }
+                        <div className="copy-block" style={{paddingTop: 20}}>
+                            <div className="alert base">{ registerMessage }</div>
                         </div>
                         }
                     </fieldset>
