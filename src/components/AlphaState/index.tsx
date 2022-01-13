@@ -14,6 +14,10 @@ function useGetValidatedState(account: string | undefined | null) {
 
     useEffect(() => {
         const fetchAccess = async () => {
+
+            if (data === null || data === undefined) {
+                return;
+            }
             const whitelisted = data.find((x: any) => x.publicKey.toLowerCase() === account?.toLowerCase());
             // if (stakingContract == null || account === undefined || account == null) {
             //     return;
