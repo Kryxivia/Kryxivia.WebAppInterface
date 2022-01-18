@@ -3,19 +3,12 @@ import { StakingStats } from "../components/StakingStats";
 import { StakeKxa } from "../components/StakeKxa";
 import { StakedKxa } from "../components/StakedKxa";
 import { useWeb3React } from "@web3-react/core";
-import useSWR from "swr";
 import { Rewards } from "../components/Rewards";
 import { defaultChain } from "../components/Web3Status";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Staking: React.FC = () => {
     const { account, chainId } = useWeb3React();
 
-    const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
-
-    if (error) return <>An error has occurred.</>;
-    if (!data) return <>Loading...</>;
     return (
         <>
             <h1>

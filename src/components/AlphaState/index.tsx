@@ -1,50 +1,43 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { useStakingContract } from "../../hooks/useContract";
-import { CONTRACT_STAKING } from "../StakeKxa";
 import { AlphaRegister } from "../AlphaRegister";
-import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+interface AlphaStateProps {
+    winners: {publicKey: string}[]
+}
 
-function useGetValidatedState(account: string | undefined | null) {
+function useGetValidatedState(account: string | undefined | null, winners: {publicKey: string}[]) {
     const [isValidated, setIsValidated] = useState(false);
-    const stakingContract = useStakingContract(CONTRACT_STAKING);
-    const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
 
     useEffect(() => {
         const fetchAccess = async () => {
-
-            if (data === null || data === undefined) {
+            if (winners === null || winners === undefined) {
                 return;
             }
-            const whitelisted = data.find((x: any) => x.publicKey.toLowerCase() === account?.toLowerCase());
-            // if (stakingContract == null || account === undefined || account == null) {
-            //     return;
-            // }
-            // const result = await stakingContract.getValidatedState(account);
-            setIsValidated(whitelisted !== undefined);
+            const winner = winners.find((x: any) => x.publicKey.toLowerCase() === (account || "").toLowerCase());
+            let whitelisted = !!winner;
+            setIsValidated(whitelisted);
+            return whitelisted;
         };
 
         fetchAccess();
-    }, [account, setIsValidated, stakingContract]);
+    }, [account, winners, setIsValidated]);
 
     return isValidated;
 }
 
-export const AlphaState = () => {
+export const AlphaState: React.FC<AlphaStateProps> = ({winners}) => {
     const { account } = useWeb3React();
-    const hasAccess = useGetValidatedState(account);
-    
+    const hasAccess = useGetValidatedState(account, winners);
 
     return (
         <>
             {account && hasAccess && <div>
-                <div className="alert success">YOU HAVE ACCESS TO ALPHA.</div>
+                <div className="alert success">YOU HAVE ALPHA ACCESS</div>
                 <AlphaRegister />
             </div>
             }
-            {account && !hasAccess && <div className="alert base">YOU DO NOT HAVE ACCESS TO ALPHA.</div>}
+            {account && !hasAccess && <div className="alert base">YOU DO NOT HAVE ALPHA ACCESS</div>}
         </>
     );
 };
