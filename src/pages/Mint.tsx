@@ -33,7 +33,7 @@ export function useHasAccess(account: string | null | undefined, winners: Winner
                 setHasAccess(false);
                 return;
             }
-            setHasAccess((winners.find(x => x.publicKey?.toLowerCase() == account?.toLowerCase()) !== undefined))
+            setHasAccess((winners.find(x => x.publicKey.toLowerCase() === account.toLowerCase()) !== undefined))
         };
 
         checkAccess();
