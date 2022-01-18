@@ -14,23 +14,21 @@ export const AlphaRegister: React.FC = () => {
 
     useEffect(() => {
         const fetchRegistration = async () => {
-            const result = await RegisterAlphaService.get();
+            const result = await RegisterAlphaService.get(account);
             if (result.discord) { setContactDiscord(result.discord); }
             if (result.telegram) { setContactTelegram(result.telegram); }
             if (result.email) { setContactEmail(result.email); }
         };
 
         fetchRegistration();
-        // eslint-disable-next-line
-    }, [RegisterAlphaService, setContactDiscord, setContactTelegram, setContactEmail]);
+    }, [account, setContactDiscord, setContactTelegram, setContactEmail]);
 
     async function register(e: any) {
         e.preventDefault();
 
         let isLoggedIn = WalletService.verifySessionIntegrity(account || "");
-
         if (isLoggedIn) {
-            const result = await RegisterAlphaService.register(contactDiscord, contactTelegram, contactEmail);
+            const result = await RegisterAlphaService.register(contactDiscord, contactTelegram, contactEmail, account);
             if (result) {
                 setRegisterMessage("Registered Successfully!");
             } else {

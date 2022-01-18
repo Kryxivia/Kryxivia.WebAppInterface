@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { Rewards } from "../components/Rewards";
 import { CHAIN_INFO } from "../constants/chain";
 import MintService from "../services/mintService";
+import {AlphaState} from "../components/AlphaState";
 
 export type Winners = Winner[];
 
@@ -50,10 +51,10 @@ export const Mint = () => {
     const { account, chainId } = useWeb3React();
     const [mintTx, setMintTx] = useState<string>();
     const [mintError, setMintError] = useState<string>();
-    const { data, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
+    const { data: dataWinners, error } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/winners`, fetcher);
     const { data: claimed } = useSWR(`${process.env.REACT_APP_MANAGER_URL}api/v1/alpha/claimed`, fetcher);
 
-    const hasAccess = useHasAccess(account, data);
+    const hasAccess = useHasAccess(account, dataWinners);
 
     const resetFeedback = () => {
         setMintError("");
@@ -63,7 +64,7 @@ export const Mint = () => {
     async function doMint(e: any) {
         resetFeedback();
         e.preventDefault();
-        const result = await MintService.claimReward();
+        const result = await MintService.claimReward(account);
         if (result.txHash) {
             setMintTx(result.txHash);
         } else {
@@ -72,9 +73,12 @@ export const Mint = () => {
     }
 
     if (error) return <>An error has occurred.</>;
-    if (!data || !claimed) return <>Loading...</>;
+    if (!dataWinners || !claimed) return <>Loading...</>;
     return (
         <>
+            <AlphaState
+                winners={dataWinners}
+            />
             <h1>
                 Get my <strong>NFT Rewards</strong> of Kryxivia Fireworks!
             </h1>
