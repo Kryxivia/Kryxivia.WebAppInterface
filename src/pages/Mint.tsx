@@ -33,10 +33,7 @@ export function useHasAccess(account: string | null | undefined, winners: Winner
                 setHasAccess(false);
                 return;
             }
-            const winner = winners.find((x: any) => x.publicKey.toLowerCase() === account.toLowerCase());
-            const whitelisted = !!winner
-            setHasAccess(whitelisted);
-            return whitelisted;
+            setHasAccess((winners.find(x => x.publicKey?.toLowerCase() == account?.toLowerCase()) !== undefined))
         };
 
         checkAccess();
